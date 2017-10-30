@@ -8,41 +8,35 @@ export default class List extends Component {
     super(props);
 
     this.state = {
-      data: props.data,
       isModalOpen: false
     }
 
-    this.removeElement = props.removeElement;
-    this.getItem = props.getItem;
-    this.listItem = {};
+    // this.removeElement = props.removeElement;
+    // this.getItem = props.getItem;
+    // this.listItem = {};
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({data: nextProps.data })
-  }
+  // view(id) {
+  //   this.getItem(id).then((data) => {
+  //     this.listItem = data;
+  //     this.setState({isModalOpen: true});
+  //   });
+  // }
 
-  view(id) {
-    this.getItem(id).then((data) => {
-      this.listItem = data;
-      this.setState({isModalOpen: true});
-    });
-  }
-
-  closeModal = () => {
-    this.setState({isModalOpen: false});
-  }
+  // closeModal = () => {
+  //   this.setState({isModalOpen: false});
+  // }
 
   render() {
     let content = null;
-    if(this.state.isModalOpen) {
-      let modalContent = <ListView listItem={this.listItem} />
-      content = <Modal content={modalContent} onClose={this.closeModal} />
-    }
+    // if(this.state.isModalOpen) {
+    //   let modalContent = <ListView listItem={this.listItem} />
+    //   content = <Modal content={modalContent} onClose={this.closeModal} />
+    // }
 
     return (
           <div>
-            <ul> { this.state.data.map((x) => <ListElement key={x.id} item={x} removeElement={this.removeElement} getListItem={(id) => this.view(id)} /> ) } </ul>
-            {content}
+            <ul> { this.props.posts.map((x) => <ListElement key={x.id} item={x} removeItem={this.props.removePost} /> ) } </ul>
           </div>
         )
   }

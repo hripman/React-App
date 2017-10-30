@@ -10,13 +10,9 @@ export default class CreateList extends Component {
     this.state = {
       isModalOpen: false
     }
-
-    this.onDataSubmit = props.onDataSubmit;
-    this.listItem = {};
   }
 
   showModal = () => {
-    this.listItem = {};
     this.setState({isModalOpen: true})
   }
 
@@ -24,15 +20,16 @@ export default class CreateList extends Component {
     this.setState({isModalOpen: false});
   }
 
-  saveData = () => {
+  saveData = (data) => {
     this.closeModal();
-    this.onDataSubmit(this.listItem);
+
+    this.props.onDataSubmit(data);
   }
 
   render() {
     let content = null;
     if(this.state.isModalOpen) {
-      let modalContent = <Form onDataSubmit={this.saveData} data={this.listItem}/>
+      let modalContent = <Form onDataSubmit={this.saveData} />
       content = <Modal content={modalContent} onClose={this.closeModal} />
     }
 

@@ -1,23 +1,24 @@
 import React, {Component} from 'react'
 
 export default class Form extends Component{
-  constructor(props) {
-    super(props);
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-    this.onDataSubmit = props.onDataSubmit;
-    this.data = props.data;
-  }
+    const postItem = {};
 
-  updateValue = (evt) => {
-    this.data[evt.target.name] = evt.target.value;
+    for (const field in this.refs) {
+      postItem[field] = this.refs[field].value;
+    }
+
+    this.props.onDataSubmit(postItem);
   }
 
   render() {
     return (
-        <form onSubmit={this.onDataSubmit}>
-            <input type='text' value={this.data && this.data.title} name="title" placeholder="Title" onChange={this.updateValue}/>
-            <input type='text' value={this.data && this.data.categories} name="categories" placeholder="Category" onChange={this.updateValue}/>
-            <input type='text' value={this.data && this.data.content} name="content" placeholder="Content" onChange={this.updateValue} />
+        <form onSubmit={this.handleSubmit}>
+            <input type='text' ref="title" name="title" placeholder="Title" />
+            <input type='text' ref="categories" name="categories" placeholder="Category" />
+            <input type='text' ref="content" name="content" placeholder="Content"/>
             <button type='submit'>Save</button>
         </form>
       )
