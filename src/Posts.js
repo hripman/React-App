@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addPost, removePost, loadPosts } from './actions/post';
 
-import List from './List';
+import List from './components/List';
 import PostsService from './services/posts';
-import CreateList from './CreateList';
+import CreateList from './components/CreateList';
 
 class Posts extends Component {
     constructor(props) {
@@ -24,13 +24,20 @@ class Posts extends Component {
             .then((post) => this.props.removePost(post))
     }
 
+    getPost = (id) => {
+        return PostsService.getById(id);
+    }
+
     render() {
         if(!this.props.posts) {
             return <div>Loading </div>
         }
-       return (<div>
-            <List posts={this.props.posts} removePost={this.removePost}/>
-            <CreateList onDataSubmit={this.onDataSumbit}/>
+       return (
+        <div>
+            <div className="container"> 
+                <List posts={this.props.posts} getItem={this.getPost} removePost={this.removePost}/>
+                <CreateList onDataSubmit={this.onDataSumbit}/>
+            </div>
        </div>
        )
     }
